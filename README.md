@@ -4,10 +4,3 @@
     <img alt="Lucas Ting — neofetch-style profile card" src="light_mode.svg">
   </picture>
 </a>
-
-I grew up in Taipei, Taiwan and now study CS + Math at NYU.<br>
-When I'm not building, I find myself:
-
-* Playing Basketball, Pickleball & Poker
-* Watching Anime & Classic Films
-* Travelling

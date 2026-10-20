@@ -15,9 +15,9 @@ WIDTH = 58  # characters in the right-hand column
 
 # (key, value) pairs; None = blank spacer line
 INFO = [
-    ("OS", "macOS, Linux"),
-    ("Origin", "Taiwan -> New York City"),
-    ("Host", "NYU Tandon School of Engineering"),
+    ("OS", "macOS"),
+    ("Origin", "Taipei, Taiwan -> New York City"),
+    ("Host", "NYU Courant"),
     ("Kernel", "Computer Science + Mathematics"),
     ("Research", "VLM Security @ Academia Sinica"),
     None,
@@ -32,7 +32,7 @@ INFO = [
 ]
 CONTACT = [
     ("Email", "lucasting1220@gmail.com"),
-    ("LinkedIn", "your-linkedin-handle"),
+    ("LinkedIn", "linkedin.com/in/lucasting1220"),
     ("GitHub", USERNAME),
 ]
 
@@ -64,7 +64,7 @@ def fetch_stats():
     while True:
         d = gql("""query($u:String!,$c:String){user(login:$u){
             followers{totalCount}
-            repositoriesContributedTo(contributionTypes:[COMMIT,PULL_REQUEST,REPOSITORY]){totalCount}
+            contributed:repositories(ownerAffiliations:[OWNER,COLLABORATOR,ORGANIZATION_MEMBER]){totalCount}
             contributionsCollection{contributionYears}
             repositories(ownerAffiliations:OWNER,first:100,after:$c){
               totalCount nodes{stargazerCount} pageInfo{hasNextPage endCursor}}}}""",
@@ -81,7 +81,7 @@ def fetch_stats():
             {"u": USERNAME, "f": f"{y}-01-01T00:00:00Z", "t": f"{y}-12-31T23:59:59Z"}, token)
         cc = c["user"]["contributionsCollection"]
         commits += cc["totalCommitContributions"] + cc["restrictedContributionsCount"]
-    return dict(repos=repos, contributed=d["repositoriesContributedTo"]["totalCount"],
+    return dict(repos=repos, contributed=d["contributed"]["totalCount"],
                 stars=stars, commits=commits, followers=d["followers"]["totalCount"])
 
 # ---------------------------------------------------------------- line layout
